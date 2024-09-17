@@ -6,15 +6,17 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-// Use middleware to parse JSON bodies
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Use the routes
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/', indexRoutes);
 app.use('/', aboutRoutes);
-app.use('/api', userRoutes); 
+app.use('/', userRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

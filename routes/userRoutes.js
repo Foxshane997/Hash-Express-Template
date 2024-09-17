@@ -2,23 +2,31 @@ const express = require('express');
 const router = express.Router();
 const { createUser, verifyUser } = require('../models/userModel');
 
-// Registration route
-router.post('/register', async (req, res) => {
-    try {
-      const { username, email, password } = req.body;
-      if (!username || !email || !password) {
-        return res.status(400).json({ error: 'All fields are required' });
-      }
-      const newUser = await createUser(username, email, password);
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
-    }
-  });
+// Render the registration page
+router.get('/register', (req, res) => {
+  res.render('register'); // Ensure 'register.ejs' is in the 'views' directory
+});
 
-// Login route
+// Handle registration form submission
+router.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    const newUser = await createUser(username, email, password);
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Handle login form submission
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await verifyUser(email, password);
     if (user) {
@@ -26,8 +34,8 @@ router.post('/login', async (req, res) => {
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
