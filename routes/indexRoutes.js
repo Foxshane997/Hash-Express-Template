@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Index route
 router.get('/', (req, res) => {
-    console.log("Rendering index route...")
+  console.log("Rendering Index Page...")
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 

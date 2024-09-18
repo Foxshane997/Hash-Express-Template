@@ -4,7 +4,8 @@ const { createUser, verifyUser } = require('../models/userModel');
 
 // Render the registration page
 router.get('/register', (req, res) => {
-  res.render('register'); // Ensure 'register.ejs' is in the 'views' directory
+  console.log("Rendering Register Page...")
+  res.render('register');
 });
 
 // Handle registration form submission
@@ -21,6 +22,12 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
+});
+
+// Render the login page
+router.get('/login', (req, res) => {
+  console.log("Rendering Login Page..")
+  res.render('login');
 });
 
 // Handle login form submission
