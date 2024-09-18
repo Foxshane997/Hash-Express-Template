@@ -20,6 +20,7 @@ const createUser = async (username, email, password) => {
 
 // Verify user password
 const verifyUser = async (email, password) => {
+  console.log("Verifying user password...")
   try {
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     const user = result.rows[0];
