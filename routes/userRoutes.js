@@ -11,17 +11,18 @@ router.get('/register', (req, res) => {
 // Handle registration form submission
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
-
+  console.log("Registering user information...")
   if (!username || !email || !password) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    const newUser = await createUser(username, email, password);
-    res.status(201).json(newUser);
+    await createUser(username, email, password);
+    res.redirect('/login');
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
+  console.log("Registration successful!")
 });
 
 // Render the login page
@@ -33,18 +34,18 @@ router.get('/login', (req, res) => {
 // Handle login form submission
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log("Attempting to Login, please wait a moment...")
+
   try {
     const user = await verifyUser(email, password);
     if (user) {
-      res.status(200).json({ message: 'Login successful', user });
+      res.redirect('/'); 
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
-  console.log("Login authorization successful!")
+  console.log("Authorization successful!")
 });
 
 module.exports = router;
