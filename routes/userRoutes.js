@@ -33,7 +33,7 @@ router.get('/login', (req, res) => {
 // Handle login form submission
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
+  console.log("Attempting to Login, please wait a moment...")
   try {
     const user = await verifyUser(email, password);
     if (user) {
@@ -44,6 +44,7 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
+  console.log("Login authorization successful!")
 });
 
 module.exports = router;
