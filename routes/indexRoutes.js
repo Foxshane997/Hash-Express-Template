@@ -1,11 +1,10 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 const router = express.Router();
 
-// Index route
-router.get('/', (req, res) => {
-  console.log("Rendering Index Page...")
-  res.sendFile(path.join(__dirname, '../views/index.html'));
+router.get("/", (req, res) => {
+  console.log("Rendering Index Page...");
+  res.render("index", { session: req.session });
 });
 
 module.exports = router;

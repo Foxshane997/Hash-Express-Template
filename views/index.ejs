@@ -10,8 +10,16 @@
     <p>This is the landing page for our Express application.</p>
 
     <nav>
+      <% if (session.userId) { %>
+      <p>Logged in as: <%= session.username %></p>
+      <p>Id: <%= session.userId %></p>
+      <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+      </form>
+      <% } else { %>
       <a href="/login">Login</a> |
       <a href="/register">Register</a>
+      <% } %>
     </nav>
 
     <a href="/about">Learn more about us</a>
