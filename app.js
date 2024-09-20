@@ -9,9 +9,9 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// Session configuration
+// Set up session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: 'yourSecretKey',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
@@ -24,6 +24,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Render the index page with login status
+app.get('/', (req, res) => {
+  const isLoggedIn = req.session.token ? true : false;
+  res.render('index', { 
+    isLoggedIn,
+    session: req.session // Pass the session object here
+  });
+});
+
+// Use routes
 app.use('/', indexRoutes);
 app.use('/', aboutRoutes);
 app.use('/', userRoutes);

@@ -8,7 +8,6 @@
   <body>
     <h1>Welcome to the Landing Page</h1>
     <p>This is the landing page for our Express application.</p>
-
     <nav>
       <% if (session.userId) { %>
       <p>Logged in as: <%= session.username %></p>
@@ -21,7 +20,7 @@
       <a href="/register">Register</a>
       <% } %>
     </nav>
-
+    <br/>
     <a href="/about">Learn more about us</a>
   </body>
 </html>
