@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   const isLoggedIn = req.session.token ? true : false;
   res.render('index', { 
     isLoggedIn,
-    session: req.session // Pass the session object here
+    session: req.session
   });
 });
 
