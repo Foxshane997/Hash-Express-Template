@@ -41,13 +41,16 @@ router.post('/login', async (req, res) => {
   try {
     const user = await verifyUser(email, password);
     if (user) {
-      const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, { expiresIn: '7d' });
-      console.log("User authorized!")
-      console.log("Generated Token:", token);
-      req.session.token = token; 
-      req.session.username = user.username; 
-      req.session.userId = user.id; 
-      return res.redirect('/'); 
+      const tokenPayload = {
+        id: user.id,
+        username: user.username,
+        is_admin: user.is_admin
+      };
+
+      const token = jwt.sign(tokenPayload, SECRET_KEY, { expiresIn: '7d' });
+      req.session.token = token;
+
+      return res.redirect('/');
     } else {
       return res.render('login', { error: 'Invalid credentials' });
     }
@@ -56,6 +59,7 @@ router.post('/login', async (req, res) => {
     return res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 // Handle logout
 router.post("/logout", (req, res) => {
